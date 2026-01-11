@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import contractBgOne from "../../assets/contractbgone.png";
-import contractBgTwo from "../../assets/contractbgtwo.png";
+
 
 export default function caretakercontractcards() {
   // Example lease dates (replace with dynamic data from DB later if needed)

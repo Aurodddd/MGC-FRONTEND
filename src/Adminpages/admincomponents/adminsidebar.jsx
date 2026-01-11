@@ -15,6 +15,7 @@ import { GrVmMaintenance } from "react-icons/gr";
 import { GrAnnounce } from "react-icons/gr";
 import { VscGitStashApply } from "react-icons/vsc";
 import { TbContract } from "react-icons/tb";
+import { MdSwitchAccount } from "react-icons/md";
 
 export default function adminsidebar({ open, setOpen }) {
   
@@ -28,6 +29,7 @@ export default function adminsidebar({ open, setOpen }) {
   { name: "Contract", icon: <TbContract />, path: "/admincontract" },
   { name: "Payment History", icon: <FaMoneyCheckAlt />, path: "/adminpayments" },
   { name: "Application Requests", icon: <VscGitStashApply />, path: "/adminapplicationrequest" },
+  { name: "Account Approval Requests", icon: <MdSwitchAccount />, path: "/adminapprovalpage" },
   { name: "Account Settings", icon: <FaCog />, path: "/adminsettings" },
 ];
 
@@ -61,7 +63,7 @@ export default function adminsidebar({ open, setOpen }) {
 
             {/* TOGGLE BUTTON */}
             <button
-                className="text-2xl text-[#db6747] ml-auto md:ml-0"
+                className="text-[20px] text-[#db6747] ml-auto md:ml-0"
                 onClick={() => setOpen(!open)}
             >
                 <FaBars />
@@ -84,7 +86,7 @@ export default function adminsidebar({ open, setOpen }) {
                 to={item.path}
                 className="flex items-center w-full h-full text-inherit no-underline gap-x-2"
               >
-                <span className="text-[23px] text-[#db6747] group-hover:text-white transition-colors duration-200 p-1 ">
+                <span className="text-[20px] text-[#db6747] group-hover:text-white transition-colors duration-200 p-1 ">
                   {item.icon}
                 </span>
                 {open && (

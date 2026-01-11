@@ -8,8 +8,7 @@ function caretakerdashboard () {
     return(
         <div className={`flex flex-col md:flex-row min-h-screen ${open ? "overflow-hidden md:overflow-auto" : ""}`}>
             <Caretakersidebar  open={open} setOpen={setOpen}/>
-            <div className={`flex flex-col flex-1 p-7 gap-y-3 ${open ? "hidden md:flex" : "flex"}`}>
-                <Announcements open={open}/>
+            <div className={`flex flex-col flex-1 p-2 md:p-5 gap-y-3 ${open ? "hidden md:flex" : "flex"}`}>
                 <Caretakerdbcards open={open}/>
             </div>
         </div>

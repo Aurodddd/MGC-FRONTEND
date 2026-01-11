@@ -53,7 +53,7 @@ const handleLogout = () => {
 
             {/* TOGGLE BUTTON */}
             <button
-                className="text-2xl text-[#db6747] ml-auto md:ml-0"
+                className="text-[20px] text-[#db6747] ml-auto md:ml-0"
                 onClick={() => setOpen(!open)}
             >
                 <FaBars />
@@ -76,7 +76,7 @@ const handleLogout = () => {
                 to={item.path}
                 className="flex items-center w-full h-full text-inherit no-underline gap-x-2"
               >
-                <span className="text-[23px] text-[#db6747] group-hover:text-white transition-colors duration-200 p-1 ">
+                <span className="text-[20px] text-[#db6747] group-hover:text-white transition-colors duration-200 p-1 ">
                   {item.icon}
                 </span>
                 {open && (

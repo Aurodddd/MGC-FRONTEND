@@ -1,90 +1,89 @@
-import { useState, useEffect } from "react";
+import React from "react";
+import { FaFileDownload, FaEye } from "react-icons/fa";
 import contractBgOne from "../../assets/contractbgone.png";
-import contractBgTwo from "../../assets/contractbgtwo.png";
+import contractBgTwo from "../../assets/contractbgtwo.jpg.png"
+
 
 export default function ContractCards() {
-  // Example lease dates (replace with dynamic data from DB later if needed)
-  const leaseStart = new Date("2024-06-01"); 
-  const leaseEnd = new Date("2025-06-01");
-
-  const [monthsLeft, setMonthsLeft] = useState(0);
-
-  useEffect(() => {
-    const today = new Date();
-    let months =
-      (leaseEnd.getFullYear() - today.getFullYear()) * 12 +
-      (leaseEnd.getMonth() - today.getMonth());
-
-    // If today is past leaseEnd → set 0
-    if (months < 0) months = 0;
-
-    setMonthsLeft(months);
-  }, [leaseEnd]);
-
   return (
-    <div className="w-full max-w-[108.1rem] mx-auto bg-gradient-to-r from-[#f7b094] to-[#dd7255] rounded-2xl mt-5 mb-8 px-12 py-8 flex flex-col gap-4 overflow-visible">
-      {/* Header */}
+    <div className="bg-gradient-to-r from-[#f7b094] to-[#dd7255] rounded-2xl w-full h-full px-4 sm:px-8 py-7 flex flex-col gap-6">
+      
+      {/* 1. HEADER */}
       <div
-        className="bg-cover bg-center rounded-2xl shadow-[15px_13px_0px_#330101] h-24 flex justify-center items-center md:justify-start md:pl-20"
-        style={{ backgroundImage: `url(${contractBgOne})` }}
+        className="flex flex-col bg-cover bg-center items-center text-center sm:text-start sm:items-start text-white px-10 py-8 shadow-[5px_5px_0px_#330101] md:shadow-[10px_8px_0px_#330101] rounded-3xl w-full"
+        style={{ backgroundImage: `url(${contractBgTwo})` }}
       >
-        <h1 className="font-[MDMilk] md:font-[BoldMilk] tracking-[3px] md:tracking-[15px] text-[25px] md:text-[30px] text-[#dd7255]">
-          CONTRACT
+        <h1 className="font-BoldMilk tracking-[3px] md:tracking-[12px] text-xl md:text-2xl text-white">
+          CONTRACT DETAILS
         </h1>
       </div>
 
-      {/* Contract Duration & Countdown */}
-      <div
-        className="bg-cover bg-center rounded-2xl shadow-[15px_13px_0px_#330101] h-40 flex flex-col justify-center pl-5 md:pl-20 text-white"
-        style={{ backgroundImage: `url(${contractBgTwo})` }}
-      >
-        <h2 className="text-lg md:text-xl font-LightMilk md:font-RegularMilk tracking-[1px]">
-          Contract Duration: 12 Months
-        </h2>
-        <p className="text-md md:text-lg mt-2">
-          Months Left:{" "}
-          <span className="font-bold">{monthsLeft}</span>
-        </p>
+      {/* 2. INFO TILES (TOP) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="bg-[#ffede1] p-6 rounded-2xl shadow-[5px_5px_0px_#330101] md:shadow-[10px_8px_0px_#330101] flex flex-col gap-y-2">
+          <p className="text-[10px] font-RegularMilk text-[#330101]/60 uppercase tracking-widest mb-1">Start Date</p>
+          <p className="font-BoldMilk text-[#330101] text-sm md:text-base">September 25, 2025</p>
+        </div>
+        
+        <div className="bg-[#ffede1] p-6 rounded-2xl shadow-[5px_5px_0px_#330101] md:shadow-[10px_8px_0px_#330101] flex flex-col gap-y-2">
+          <p className="text-[10px] font-RegularMilk text-[#330101]/60 uppercase tracking-widest mb-1">End Date</p>
+          <p className="font-BoldMilk text-[#330101] text-sm md:text-base">September 25, 2026</p>
+        </div>
+
+        <div className="bg-[#4b150d] p-6 rounded-2xl shadow-[5px_5px_0px_#faefe8] md:shadow-[10px_8px_0px_#faefe8] flex flex-col sm:col-span-2 lg:col-span-1 gap-y-2">
+          <p className="text-[10px] font-RegularMilk text-[#ffebdf]/60 uppercase tracking-widest mb-1">Status</p>
+          <p className="font-BoldMilk bg-green-600 px-5 py-1 rounded-xl w-fit text-white text-sm md:text-base tracking-[2px]">
+            ACTIVE
+          </p>
+        </div>
       </div>
 
-      {/* Tenancy Rules and Terms */}
-      <div className="bg-gradient-to-r from-[#fefefe] to-[#faefe8] rounded-2xl shadow-[15px_13px_0px_#330101] h-auto min-h-[10rem] pl-10 md:pl-20 pr-10 py-6 text-black">
-        <h3 className="text-lg font-RegularMilk mb-2">Tenancy Rules</h3>
-        <ul className="list-disc ml-6 mb-4 text-sm md:text-base">
-          <li>No pets allowed inside the premises.</li>
-          <li>Quiet hours are enforced from 10PM to 6AM.</li>
-          <li>Tenants are responsible for maintaining cleanliness.</li>
-        </ul>
-
-        <h3 className="text-lg font-RegularMilk mb-2">Termination & Renewal Conditions</h3>
-        <ul className="list-disc ml-6 text-sm md:text-base mb-6">
-          <li>Early termination requires a 30-day notice.</li>
-          <li>Contract renewals are subject to landlord approval.</li>
-          <li>Deposit will be refunded within 15 days after move-out.</li>
-        </ul>
-      </div>
-       {/* View & Print Buttons */}
-      <div className="flex gap-4 justify-between">
+      {/* 3. BUTTONS ROW (CENTERED) */}
+      <div className="flex flex-col sm:flex-row gap-2 md:gap-3">
         <button
-          className="bg-gradient-to-r from-[#db6848] to-[#c24831] 
-             rounded-2xl shadow-[15px_13px_0px_#330101] 
-             min-h-[3rem] text-white font-RegularMilk 
-             px-6 py-4 tracking-[3px] cursor-pointer"
-          onClick={() => alert("Open full contract here (PDF/Modal).")}
+          className="flex-1 bg-[#4b150d] text-[#ffebdf] text-sm rounded-2xl shadow-[5px_5px_0px_#faefe8] md:shadow-[8px_8px_0px_#faefe8] font-RegularMilk px-4 py-5 tracking-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_#faefe8] active:translate-y-[4px] active:shadow-none transition-all flex items-center justify-center gap-3"
+          onClick={() => alert("Open full contract")}
         >
-          View Contract Paper
+          <FaEye size={18} /> VIEW FULL CONTRACT
         </button>
 
         <button
-          className="bg-gradient-to-r from-[#db6848] to-[#c24831]
-             rounded-2xl shadow-[15px_13px_0px_#330101] 
-             min-h-[3rem] text-white font-RegularMilk 
-             px-6 py-4 tracking-[3px] cursor-pointer"
+          className="flex-1 bg-[#4b150d] text-[#ffebdf] text-sm rounded-2xl shadow-[5px_5px_0px_#faefe8] md:shadow-[8px_8px_0px_#faefe8] font-RegularMilk px-4 py-5 tracking-[1px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_#faefe8] active:translate-y-[4px] active:shadow-none transition-all flex items-center justify-center gap-3"
           onClick={() => window.print()}
         >
-          Print Contract
+          <FaFileDownload size={18} /> DOWNLOAD COPY
         </button>
       </div>
+
+      {/* 4. RULES & CONDITIONS (BOTTOM) */}
+      <div className="bg-gradient-to-r from-[#fefefe] to-[#ffede1] rounded-2xl shadow-[5px_5px_0px_#330101] md:shadow-[10px_8px_0px_#330101] p-8 md:p-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          {/* Section A */}
+          <div className="flex flex-col gap-3">
+            <h3 className="text-lg font-BoldMilk text-[#330101] border-b-2 border-[#330101]/10 pb-2">
+              Tenancy Rules
+            </h3>
+            <ul className="list-disc ml-5 space-y-3 text-sm md:text-base text-black/80">
+              <li>No pets allowed inside the premises.</li>
+              <li>Quiet hours are enforced from 10PM to 6AM.</li>
+              <li>Tenants are responsible for maintaining cleanliness.</li>
+            </ul>
+          </div>
+
+          {/* Section B */}
+          <div className="flex flex-col gap-3">
+            <h3 className="text-lg font-BoldMilk text-[#330101] border-b-2 border-[#330101]/10 pb-2">
+              Conditions & Renewal
+            </h3>
+            <ul className="list-disc ml-5 space-y-3 text-sm md:text-base text-black/80">
+              <li>Early termination requires a 30-day notice.</li>
+              <li>Contract renewals are subject to landlord approval.</li>
+              <li>Deposit will be refunded within 15 days after move-out.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 }

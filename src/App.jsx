@@ -17,6 +17,7 @@ import Adminannouncement from './Adminpages/adminannouncement.jsx'
 import Admincontract from './Adminpages/admincontract.jsx'
 import Adminpaymenthis from './Adminpages/adminpaymenthis.jsx'
 import Adminapplicationreq from './Adminpages/adminapplicationreq.jsx'
+import Adminapproval from './Adminpages/adminapproval.jsx'
 import Caretakerdashboard from './Caretakerpages/caretakerdashboard.jsx'
 import Caretakertenants from './Caretakerpages/caretakertenants.jsx'
 import Caretakermaintenance from './Caretakerpages/caretakermaintenance.jsx'
@@ -32,12 +33,12 @@ function App() {
       <Routes>
         <Route path="/lp" element={<Landingpage />} />
         <Route path="/applynowpage" element={<Applynow />} />
-        <Route path="/" element={<TenantDashboard/>} />
+        <Route path="/tenantdb" element={<TenantDashboard/>} />
         <Route path="/tenantmaintenance" element={<Tenantmaintenance/>} />
         <Route path="/tenantcontract" element={<Tenantcontract/>} />
         <Route path="/tenantpayments" element={<Tenantpaymenthis/>} />
         <Route path="/tenantsettings" element={<Tenantaccsett/>} />
-        <Route path="/admindb" element={<Admindashboard/>} />
+        <Route path="/" element={<Admindashboard/>} />
         <Route path="/admintenants" element={<Admintenants/>} />
         <Route path="/adminunits" element={<Adminunits/>} />
         <Route path="/admintenantprof" element={<Admintenantprofile/>} />
@@ -46,6 +47,7 @@ function App() {
         <Route path="/admincontract" element={<Admincontract/>} />
         <Route path="/adminpayments" element={<Adminpaymenthis/>} />
         <Route path="/adminapplicationrequest" element={<Adminapplicationreq/>} />
+        <Route path="/adminapprovalpage" element={<Adminapproval/>} />
         <Route path="/adminsettings" element={<Adminaccsettings/>} />
         <Route path="/caretakerdb" element={<Caretakerdashboard/>} />
         <Route path="/caretakertenants" element={<Caretakertenants/>} />

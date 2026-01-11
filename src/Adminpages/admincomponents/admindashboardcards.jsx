@@ -6,7 +6,8 @@ import {
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  Filler // 🔹 Added for gradient fill
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { useNavigate } from 'react-router-dom';
@@ -27,15 +28,16 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  Filler // 🔹 Registered Filler
 );
 
 export default function AdminDashboardCards() {
   const navigate = useNavigate();
 
   const monthNames = useMemo(() => [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
   ], []);
 
   const monthlyEarnings = [
@@ -46,6 +48,7 @@ export default function AdminDashboardCards() {
   const currentMonthName = monthNames[currentMonthIndex];
   const currentMonthEarnings = monthlyEarnings[currentMonthIndex];
 
+  // 🔹 UPDATED GRAPH DATA ONLY
   const earningsData = {
     labels: monthNames,
     datasets: [
@@ -53,9 +56,20 @@ export default function AdminDashboardCards() {
         label: 'Monthly Earnings',
         data: monthlyEarnings,
         borderColor: '#ffede1',
-        backgroundColor: 'rgba(255,237,225,0.2)',
-        tension: 0.5,
-        pointBackgroundColor: '#ffede1'
+        // This creates the smooth fade effect
+        backgroundColor: (context) => {
+          const ctx = context.chart.ctx;
+          const gradient = ctx.createLinearGradient(0, 0, 0, 350);
+          gradient.addColorStop(0, 'rgba(255, 237, 225, 0.4)');
+          gradient.addColorStop(1, 'rgba(255, 237, 225, 0)');
+          return gradient;
+        },
+        fill: true, // 🔹 Enables area fill
+        tension: 0.4, // 🔹 Smoother line curve
+        pointBackgroundColor: '#ffede1',
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        borderWidth: 2
       }
     ]
   };
@@ -63,6 +77,9 @@ export default function AdminDashboardCards() {
   const earningsOptions = {
     responsive: true,
     maintainAspectRatio: false,
+    layout: {
+      padding: { left: 5, right: 10, top: 10 }
+    },
     plugins: {
       legend: { display: false },
       tooltip: {
@@ -72,17 +89,21 @@ export default function AdminDashboardCards() {
     },
     scales: {
       x: {
-        ticks: { 
-        color: '#ffede1' },
+        ticks: {
+          color: '#ffede1',
+          autoSkip: true,
+          maxTicksLimit: 6,
+          maxRotation: 0,
+          minRotation: 0,
+          font: { size: 10 }
+        },
         grid: { display: false }
       },
       y: {
-        ticks:
-         { color: '#ffede1',
-        stepSize: 2000,
-        font: {
-          size: 14,
-        },
+        ticks: {
+          color: '#ffede1',
+          stepSize: 2000,
+          font: { size: 12 }
         },
         grid: { color: 'rgba(255, 237, 225, 0.1)' }
       }
@@ -90,114 +111,131 @@ export default function AdminDashboardCards() {
   };
 
   return (
-    <div className="bg-gradient-to-r from-[#f7b094] to-[#dd7255] rounded-2xl w-full h-auto overflow-visible  px-6 md:px-12 pt-15 pb-15 flex flex-col gap-6">
+    <div className="bg-gradient-to-r from-[#f7b094] to-[#dd7255] rounded-2xl w-full h-full px-6 sm:px-8 md:px-9  py-8  flex flex-col gap-3 md:gap-5 ">
 
       {/* Header */}
       <div
-        className="bg-cover bg-center shadow-[15px_13px_0px_#330101] rounded-2xl text-white px-4 md:px-28 py-5 flex flex-col justify-center text-center md:text-justify"
+        className="flex flex-col bg-cover bg-center items-center sm:items-start  text-white px-6 sm:px-9 md:px-15 py-5 sm:py-8 shadow-[5px_5px_0px_#330101] md:shadow-[10px_8px_0px_#330101] rounded-2xl w-full gap-1"
         style={{ backgroundImage: `url(${dashboardBg})` }}
       >
-        <h2 className="text-[10px] md:text-[22px] font-LightMilk tracking-[2px] md:pl-[81px]">
+        <h2 className="font-LightMilk md:text-xl ">
           WELCOME ADMIN!
         </h2>
-        <h1 className="text-[24px] md:text-[40px] font-BoldMilk tracking-[10px] md:tracking-[15px]">
+        <h1 className="font-BoldMilk text-2xl md:text-3xl tracking-[3px] md:tracking-[8px] ">
           DASHBOARD
         </h1>
       </div>
 
       {/* Grid Container */}
-      <div className="flex flex-col lg:flex-row gap-5 w-full">
+      <div className="flex flex-col lg:flex-row gap-5 w-full h-full">
 
         {/* Left Section */}
-        <div className="flex flex-col gap-8 w-full lg:w-[66%]">
-
-          {/* Total Tenants */}
+        <div className="flex flex-col gap-1 md:gap-3 w-full lg:w-[66%] h-full">
+          {/* TOTAL TENANTS */}
           <div
-            className="bg-cover bg-center shadow-[15px_13px_0px_#330101] w-full min-h-45 rounded-2xl flex flex-col justify-center pl-10 md:pl-17 font-RegularMilk"
+            className="bg-cover bg-center shadow-[5px_5px_0px_#330101] md:shadow-[10px_8px_0px_#330101] w-full rounded-2xl flex flex-col justify-center py-18 px-10 md:px-17 font-RegularMilk"
             style={{ backgroundImage: `url(${totaltenantbg})` }}
           >
-            <h1 className="text-xl md:text-2xl tracking-[1px]">TOTAL TENANTS</h1>
-            <p className="text-4xl md:text-[3rem] mt-2">20</p>
+            <h1 className="text-base md:text-xl tracking-[1px]">TOTAL TENANTS</h1>
+            <p className="text-xl md:text-2xl lg:text-4xl mt-2">20</p>
           </div>
 
-          {/* Total Units */}
+          {/* TOTAL UNITS */}
           <div
-            className="bg-cover bg-center shadow-[15px_13px_0px_#330101] w-full min-h-45 rounded-2xl px-10 md:pl-17 flex flex-row flex-wrap sm:flex-nowrap justify-between items-center py-10 gap-y-5 font-RegularMilk"
+            className="bg-cover bg-center shadow-[5px_5px_0px_#330101] md:shadow-[10px_8px_0px_#330101] w-full rounded-2xl py-15 px-10 md:px-17 flex flex-row flex-wrap sm:flex-nowrap justify-between items-center py-18 gap-y-5 font-RegularMilk"
             style={{ backgroundImage: `url(${totalunits})` }}
           >
-            <div className="flex flex-col">
-              <h1 className="text-md md:text-xl lg:text-2xl tracking-[1px]">TOTAL UNITS</h1>
-              <h1 className="text-4xl md:text-[3rem] mt-2">35</h1>
+            <div className="flex flex-col ">
+              <h1 className="text-base md:text-xl tracking-[1px] mb-2 ">TOTAL UNITS</h1>
+              <h1 className="text-xl md:text-2xl lg:text-4xl ">35</h1>
             </div>
-            <div className="flex flex-row flex-wrap sm:flex-nowrap gap-y-5 gap-x-5 md:gap-15 pr-10">
-              <div className="flex flex-col items-center gap-y-2">
-                <p className="text-base md:text-lg bg-white px-13 py-4">17</p>
-                <p className="text-base md:text-md bg-white px-7 py-1">Occupied</p>
+            <div className="flex flex-row gap-x-4 md:gap-x-8 lg:pr-5 text-center ">
+              {/* Occupied Pill */}
+              <div className="flex flex-col items-center group">
+                <p className="text-[10px] md:text-xs mb-2  uppercase tracking-widest font-BoldMilk  text-[#4b150d]">Occupied</p>
+                <div className=" bg-white/60 backdrop-blur-md border border-white/30 px-5 sm:px-8 md:px-13 lg:px-16 py-3 rounded-2xl shadow-sm transition-all group-hover:bg-white/30">
+                  <p className="text-xl md:text-2xl font-BoldMilk text-[#4b150d]">15</p>
+                </div>
               </div>
-              <div className="flex flex-col items-center gap-y-2">
-                <p className="text-base md:text-lg bg-white px-13 py-4">20</p>
-                <p className="text-base md:text-md bg-white px-9 py-1">Vacant</p>
+
+              {/* Vacant Pill */}
+              <div className="flex flex-col items-center group">
+                <p className="text-[10px] md:text-xs mb-2 uppercase tracking-widest font-BoldMilk  text-[#4b150d]">Vacant</p>
+                <div className="bg-white/60 backdrop-blur-md border border-white/30 px-5 sm:px-8 md:px-13 lg:px-16 py-3 rounded-2xl shadow-sm transition-all group-hover:bg-black/20">
+                  <p className="text-xl md:text-2xl font-BoldMilk text-[#4b150d]">20</p>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Requests */}
-          <div className="bg-gradient-to-r from-[#da6646] to-[#aa2f1e] shadow-[15px_13px_0px_#330101] w-full rounded-2xl flex flex-col sm:flex-row gap-4 sm:gap-8 px-6 md:px-20 py-7 text-black">
-            {/* Maintenance Requests */}
+          {/* REQUESTS */}
+          <div className="bg-gradient-to-r from-[#da6646] to-[#aa2f1e] shadow-[5px_5px_0px_#330101] md:shadow-[10px_8px_0px_#330101] w-full h-full  rounded-2xl flex flex-col sm:flex-row gap-4 sm:gap-8 py-7 px-6 md:px-8 text-black">
+            {/* Maintenance */}
             <div
-              className="bg-cover bg-center rounded-2xl w-full sm:w-1/2 p-5"
+              className="flex flex-col justify-between  gap-1 sm:gap-3  bg-cover bg-center rounded-2xl h-auto w-full sm:w-1/2 p-10"
               style={{ backgroundImage: `url(${maintreq})` }}
             >
-              <h1 className="text-lg font-RegularMilk">Maintenance Requests</h1>
-              <h1 className="text-[40px] md:text-[30px] font-LightMilk pl-3">5</h1>
-              <button onClick={() => navigate('/adminmaintenance')} className="bg-[#ffede1] text-[#aa2f1e] font-MDMilk px-4 py-1 tracking-[1px] rounded-lg w-max shadow hover:bg-white transition">
-                View
-              </button>
+              <h1 className="text-base tracking-[1px] font-RegularMilk">Maintenance Requests</h1>
+              <div className="flex flex-row justify-between">
+                <h1 className="text-xl md:text-2xl lg:text-4xl font-LightMilk pl-3">5</h1>
+                <button onClick={() => navigate('/adminmaintenance')} className="bg-[#4b150d] text-sm text-[#ffede1] tracking-[1px] font-MDMilk px-4 rounded-2xl w-max shadow hover:bg-white hover:text-[#aa2f1e] transition cursor-pointer">
+                  View
+                </button>
+              </div>
             </div>
 
-            {/* Appointment Requests */}
+            {/* Appointment */}
             <div
-              className="bg-cover bg-center rounded-2xl w-full sm:w-1/2 p-5"
+              className="bg-cover bg-center flex flex-col justify-between  gap-1 sm:gap-3  rounded-2xl h-auto w-full sm:w-1/2 p-10"
               style={{ backgroundImage: `url(${appointreq})` }}
             >
-              <h1 className="text-lg font-RegularMilk">Appointment Requests</h1>
-              <h1 className="text-[40px] md:text-[30px] font-LightMilk pl-3">2</h1>
-              <button onClick={() => navigate('/adminapplicationrequest')} className="bg-[#ffede1] text-[#aa2f1e] font-MDMilk px-4 py-1 tracking-[1px] rounded-lg w-max shadow hover:bg-white transition">
-                View
-              </button>
+              <h1 className="text-base tracking-[1px] font-RegularMilk">Appointment Requests</h1>
+              <div className="flex flex-row justify-between">
+                <h1 className="text-xl md:text-2xl lg:text-4xl font-LightMilk pl-3">2</h1>
+                <button onClick={() => navigate('/adminapplicationrequest')} className="bg-[#4b150d] text-sm text-[#ffede1] tracking-[1px] font-MDMilk px-4 rounded-2xl w-max shadow hover:bg-white hover:text-[#aa2f1e] transition cursor-pointer">
+                  View
+                </button>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Right Section */}
-        <div className="flex flex-col gap-5 w-full lg:w-[37%] justify-center items-center text-center">
+        <div className="flex flex-col gap-1 md:gap-3 w-full lg:w-[37%] h-full">
 
-          {/* Rent Collected */}
+          {/* RENT COLLECTED */}
           <div
-            className="bg-cover bg-center shadow-[15px_13px_0px_#ffede1] w-full h-full text-[#ffede1] rounded-2xl p-6 flex flex-col justify-center "
+            className="bg-cover bg-center shadow-[5px_5px_0px_#ffede1] shadow-[5px_5px_0px_#ffede1] md:shadow-[10px_8px_0px_#ffede1] w-full h-full text-[#ffede1] rounded-2xl p-8 flex flex-col justify-center text-center"
             style={{ backgroundImage: `url(${rentcollected})` }}
           >
-            <div>
-              <div className="h-60 mb-10">
+            <div className="flex flex-col gap-1">
+              <div className="h-56 sm:h-64 md:h-72 lg:h-80 mb-4">
                 <Line data={earningsData} options={earningsOptions} />
               </div>
-              <h1 className="text-base md:text-md font-RegularMilk tracking-[2px]">
+
+              <h1 className="text-xs md:text-sm font-LightMilk border-t border-[#ffede1]/20 pt-2 md:pt-4 tracking-[2px]">
                 Rent Collected this Month ({currentMonthName}):
               </h1>
-              <p className="text-lg md:text-xl mt-2 font-[LEMON MILK]">
+              <p className="text-xl md:text-2xl font-MDMilk">
                 ₱{currentMonthEarnings.toLocaleString()} / ₱10,000
               </p>
             </div>
           </div>
 
-          {/* Due Today */}
+          {/* DUE TODAY */}
           <div
-            className="bg-cover bg-center shadow-[15px_13px_0px_#ffede1] w-full h-[30%] text-[#ffede1] rounded-2xl p-6"
+            className="bg-cover bg-center shadow-[5px_5px_0px_#330101] shadow-[5px_5px_0px_#ffede1] md:shadow-[10px_8px_0px_#ffede1] flex flex-col justify-center w-full h-[30%] rounded-2xl p-8 px-12 gap-3"
             style={{ backgroundImage: `url(${duetoday})` }}
           >
-            <h1 className="text-md md:text-xl font-RegularMilk tracking-[2px]">Due Rent Today</h1>
-            <p className="text-4xl md:text-5xl mt-4 font-[LEMON MILK]">4</p>
+            <h1 className="text-base md:text-xl font-RegularMilk tracking-[2px ] text-[#ffede1]">DUE RENT TODAY</h1>
+            <div className="flex flex-row justify-between">
+              <p className="text-xl md:text-2xl lg:text-4xl font-LightMilk text-[#ffede1]">4</p>
+              <button onClick={() => navigate('/adminpayments')} className="bg-[#ffede1] text-sm text-[#aa2f1e] font-MDMilk px-6  tracking-[1px] rounded-2xl w-max shadow hover:bg-[#4b150d] hover:text-[#ffede1] transition cursor-pointer">
+                View
+              </button>
+            </div>
           </div>
+
         </div>
       </div>
     </div>

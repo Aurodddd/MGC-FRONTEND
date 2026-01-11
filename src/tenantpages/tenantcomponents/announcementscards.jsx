@@ -24,8 +24,8 @@ function Announcement() {
   };
 
   return (
-    <div className="bg-gradient-to-r from-[#4d0707] to-[#160000] text-white p-6 rounded-xl flex flex-col lg:flex-row gap-y-2 items-start lg:items-center lg:justify-between">
-      <h2 className="text-base font-BoldMilk tracking-[7px] ml-5 whitespace-nowrap">ANNOUNCEMENTS</h2>
+    <div className="bg-gradient-to-r from-[#4d0707] to-[#160000] text-white p-3 rounded-xl flex flex-col lg:flex-row gap-y-2 items-start lg:items-center lg:justify-between">
+      <h2 className="text-sm font-BoldMilk tracking-[7px] ml-5 whitespace-nowrap">ANNOUNCEMENTS</h2>
 
       {/* Desktop Buttons */}
       <div className="hidden   lg:flex gap-4 justify-center lg:ml-5">
